@@ -1,0 +1,83 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>create-tareas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container pt-4">
+    <div class="row">
+      <div class="col-lg-6 offset-lg-3">
+        <div class="card text-center">
+          <h1 class="text-dark mt-4">
+            Agregar Tarea
+            <div
+              *ngIf="loading"
+              class="spinner-border float-right"
+              style="width: 2rem; height: 2rem"
+              role="status"
+            >
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </h1>
+          <span *ngIf="submitted && myForm.invalid" class="badge text-danger"
+            >Todos los campos son obligatorios</span
+          >
+          <div class="card-header justify-content-center align-items-center">
+            <div style="width: 10rem; height: 10rem">
+              <ng-lottie [options]="options"></ng-lottie>
+            </div>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+              <div class="row">
+                <div class="col m-3">
+                  <input
+                    type="date"
+                    class="form-control form-control-lg"
+                    formControlName="fecha"
+                    placeholder="fecha"
+                  />
+                </div>
+                <div class="col m-3">
+                  <input
+                    type="number"
+                    class="form-control form-control-lg"
+                    formControlName="horas"
+                    placeholder="Horas"
+                  />
+                </div>
+              </div>
+              <div class="row m-3">
+                <select
+                  class="custom-select form-control form-control-lg"
+                  id="inlineFormCustomSelectPref"
+                  formControlName="tarea"
+                >
+                  <option selected>Choose...</option>
+                  <option value="tarea 1">Tarea 1</option>
+                  <option value="tarea 2">Tarea 2</option>
+                  <option value="tarea 3">Tarea 3</option>
+                </select>
+              </div>
+
+              <div class="mt-3 mb-4">
+                <button
+                  type="text"
+                  class="btn btn-secondary btn-lg mr-3"
+                  style="margin-right: 10px"
+                  routerLink="/tareas"
+                >
+                  Volver
+                </button>
+                <button type="submit" class="btn btn-primaryCUN btn-lg">
+                  Agregar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

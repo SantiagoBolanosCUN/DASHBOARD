@@ -1,0 +1,7 @@
+{
+  "name": "IonicAngularDashboard",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

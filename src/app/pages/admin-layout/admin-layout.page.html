@@ -1,0 +1,269 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Administrador</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="header bg-indigo pb-8 pt-5 pt-md-5">
+    <div class="container-fluid">
+      <div class="header-body">
+        <!-- Card stats -->
+        <div class="row">
+          <div class="col-xl-4 col-lg-6 col-sm-4">
+            <div class="card card-stats mb-4 mb-xl-0">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="card-title text-uppercase text-muted mb-0">
+                      Docentes
+                    </h5>
+                    <span class="h2 font-weight-bold mb-0"
+                      >{{cantidadDocentes}}</span
+                    >
+                  </div>
+                  <div class="col-auto">
+                    <div
+                      class="icon icon-shape bg-CUN text-white rounded-circle shadow"
+                    >
+                      <i class="fas fa-users"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4 col-lg-6 col-sm-4">
+            <div class="card card-stats mb-4 mb-xl-0">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="card-title text-uppercase text-muted mb-0">
+                      Horas
+                    </h5>
+                    <span class="h2 font-weight-bold mb-0"> {{GetHoras}} </span>
+                  </div>
+                  <div class="col-auto">
+                    <div
+                      class="icon icon-shape bg-CUN text-white rounded-circle shadow"
+                    >
+                      <i class="fas fa-clock"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4 col-lg-6 col-sm-4">
+            <div class="card card-stats mb-4 mb-xl-0">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="card-title text-uppercase text-muted mb-0">
+                      TAREAS
+                    </h5>
+                    <span class="h2 font-weight-bold mb-0"
+                      >{{tareasTotales}}</span
+                    >
+                  </div>
+                  <div class="col-auto">
+                    <div
+                      class="icon icon-shape bg-CUN text-white rounded-circle shadow"
+                    >
+                      <i class="fas fa-chart-pie"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid bg-indigo mt--7 pb-5">
+    <div class="row">
+      <div class="form-group col-xl-12">
+        <div class="card shadow selectng">
+          <div class="card-header bg-transparent">
+            <div class="row align-items-center">
+              <div class="col">
+                <h6 class="text-uppercase text-muted ls-1 mb-1">Selección</h6>
+                <h2 class="mb-0">Docentes</h2>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <ng-select
+              [multiple]="true"
+              [(ngModel)]="selectedDocentes"
+              (add)="imprimir()"
+            >
+              <ng-option
+                *ngFor="let docente of docentes"
+                [value]="docente.email"
+                [disabled]="docente.disabled"
+              >
+                {{docente.nombre}}</ng-option
+              >
+              <ng-option [value]="'custom'">Custom</ng-option>
+            </ng-select>
+
+            <div class="text-right">
+              <button
+                type="button"
+                class="btn btn-primaryCUN mt-4 p-2"
+                (click)="comparar()"
+              >
+                Comparar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xl-8 mb-5 mb-xl-0">
+        <div class="card shadow">
+          <div class="card-header bg-transparent">
+            <div class="row align-items-center">
+              <div class="col">
+                <h6 class="text-uppercase text-muted ls-1 mb-1">Horas</h6>
+                <h2 class="mb-0">Grafico 1</h2>
+              </div>
+              <div class="col">
+                <ul class="nav nav-pills justify-content-end">
+                  <li
+                    class="nav-item mr-2 mr-md-0"
+                    data-toggle="chart"
+                    data-target="#chart-sales"
+                  >
+                    <a href="javascript:void(0)" class="nav-link py-2 px-3">
+                      <span class="d-none d-md-block text-CUN">Mensual</span>
+                      <span class="d-md-none">M</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <!-- Chart -->
+            <div class="chart">
+              <!-- Chart wrapper -->
+              <div style="display: block">
+                <canvas
+                  #barCanvas
+                  style="position: relative; height: 20vh; width: 40vw"
+                >
+                </canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4">
+        <div class="card shadow">
+          <div class="card-header bg-transparent">
+            <div class="row align-items-center">
+              <div class="col">
+                <h6 class="text-uppercase text-muted ls-1 mb-1">Tareas</h6>
+                <h2 class="mb-0">Grafico 2</h2>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <!-- Chart -->
+            <div class="chart">
+              <canvas id="chart-orders" class="chart-canvas"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class="col-xl-13 mb-5 mb-xl-0">
+        <div class="card shadow">
+          <div class="card-header border-0">
+            <div class="row align-items-center">
+              <div class="col">
+                <h3 class="mb-0">Docentes</h3>
+              </div>
+
+              <div class="col text-right">
+                <a class="btn btn-sm btn-primaryCUN">Descargar</a>
+              </div>
+            </div>
+          </div>
+          <div>
+            <input
+              class="form-control"
+              id="myInput"
+              type="text"
+              placeholder="Search.."
+              [(ngModel)]="filterPost"
+            />
+          </div>
+          <div class="table-responsive">
+            <!-- Projects table -->
+            <table class="table align-items-center table-flush">
+              <thead className="thead-light">
+                <tr>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Horas</th>
+                  <th scope="col">Tareas</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let docente of docentes | paginate: { itemsPerPage: 2, currentPage: p }"
+                >
+                  <th scope="row">{{docente.nombre}}</th>
+                  <td>{{docente.horastotales}}</td>
+                  <td>{{docente.tareasTotales}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="text-dark float-right pt4">
+              <pagination-controls
+                (pageChange)="p = $event"
+              ></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="row align-items-center justify-content-xl-between">
+      <div class="col-xl-6">
+        <div class="copyright text-center text-xl-left text-muted pl-4">
+          &copy; {{ 2022 | date: "2022" }}
+          <a
+            href="https://cun.edu.co/"
+            class="font-weight-bold ml-1 text-CUN"
+            target="_blank"
+            >CUN</a
+          >
+        </div>
+      </div>
+      <div class="col-xl-6">
+        <ul
+          class="nav nav-footer justify-content-center justify-content-xl-end pr-5"
+        >
+          <li class="nav-item">
+            <a
+              href="https://virtual.cun.edu.co/cemp/cebiac/"
+              class="nav-link"
+              target="_blank"
+              >CEBIAC</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</ion-content>

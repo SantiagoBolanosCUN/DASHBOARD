@@ -1,0 +1,59 @@
+<ion-content>
+  <app-navbar></app-navbar>
+  <div>
+    <div class="container mt-4">
+      <div class="card">
+        <div class="card-body">
+          <span class="h3 text-dark">Listado tareas</span>
+          <button
+            style="float: right"
+            class="btn btn-primaryCUN"
+            routerLink="/create-tareas"
+          >
+            Agregar
+          </button>
+          <div
+            class="row justify-content-center text-dark mt-5"
+            *ngIf="tareas.length == 0"
+          >
+            <ng-lottie [options]="options"></ng-lottie>
+          </div>
+
+          <h5 class="text-dark mt-5" *ngIf="tareas.length == 0">
+            Por favor agregue una tarea
+          </h5>
+          <table *ngIf="tareas.length > 0" class="table table-striped mt-5">
+            <thead>
+              <tr>
+                <th>Tarea</th>
+                <th>Horas</th>
+                <th>Fecha</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let tareita of tareas | paginate: { itemsPerPage: 2, currentPage: page }"
+              >
+                <td>{{tareita.tarea}}</td>
+                <td>{{tareita.horas}}</td>
+                <td>{{tareita.fecha}}</td>
+                <td>
+                  <i
+                    (click)="eliminarTarea(tareita.id)"
+                    class="far fa-trash-alt fa-lg text-danger"
+                  ></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="text-dark float-right pt-4">
+            <pagination-controls
+              (pageChange)="page = $event"
+            ></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

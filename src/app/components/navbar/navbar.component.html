@@ -1,0 +1,10 @@
+<ion-header>
+  <nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+      <span class="navbar-brand mb-0 h1">CUN</span>
+      <div *ngIf="btnLogout" class="text-right">
+        <button type="button" class="btn btn-danger" (click)="logout()">Cerrar sesión</button>
+      </div>
+    </div>
+  </nav>
+</ion-header>
